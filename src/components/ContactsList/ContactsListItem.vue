@@ -35,7 +35,11 @@ export default {
 			required: true,
 		},
 	},
-
+	data() {
+		return {
+			avatarUrl: undefined,
+		}
+	},
 	computed: {
 		selectedGroup() {
 			return this.$route.params.selectedGroup
@@ -48,18 +52,25 @@ export default {
 		id() {
 			return window.btoa(this.source.key).slice(0, -2)
 		},
-
-		avatarUrl() {
+	},
+	mounted() {
+		this.loadAvatarUrl()
+	},
+	methods: {
+		async loadAvatarUrl() {
 			if (this.source.photo) {
-				return `${this.source.photoUrl}`
+				const photoUrl = await this.source.getPhotoUrl()
+				if (!photoUrl) {
+					// Invalid photo data
+					return undefined
+				}
+				return `${photoUrl}`
 			}
 			if (this.source.url) {
 				return `${this.source.url}?photo`
 			}
 			return undefined
 		},
-	},
-	methods: {
 
 		/**
 		 * Select this contact within the list

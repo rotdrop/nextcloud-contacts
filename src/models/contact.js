@@ -230,11 +230,13 @@ export default class Contact {
 	 * Return the photo usable url
 	 * We cannot fetch external url because of csp policies
 	 *
-	 * @readonly
 	 * @memberof Contact
 	 */
-	get photoUrl() {
+	async getPhotoUrl() {
 		const photo = this.vCard.getFirstProperty('photo')
+		if (!photo) {
+			return false
+		}
 		const encoding = photo.getFirstParameter('encoding')
 		let photoType = photo.getFirstParameter('type')
 		let photoB64 = this.photo
@@ -251,7 +253,7 @@ export default class Contact {
 		// Verify if SVG is valid
 		if (photoType === 'svg') {
 			const imageSvg = atob(photoB64)
-			const cleanSvg = (async() => await sanitizeSVG(imageSvg))()
+			const cleanSvg = await sanitizeSVG(imageSvg)
 
 			if (!cleanSvg) {
 				console.error('Invalid SVG for the following contact. Ignoring...', this.contact, { photoB64, photoType })
