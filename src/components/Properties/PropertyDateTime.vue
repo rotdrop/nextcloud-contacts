@@ -74,6 +74,7 @@ import {
 	NcDateTimePicker as DateTimePicker,
 	NcSelect,
 } from '@nextcloud/vue'
+import { getLocale } from '@nextcloud/l10n'
 import ICAL from 'ical.js'
 
 import PropertyMixin from '../../mixins/PropertyMixin.js'
