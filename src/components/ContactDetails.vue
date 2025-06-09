@@ -908,7 +908,11 @@ export default defineComponent({
 				// fetching newly created & storred contact
 				const contact = this.$store.getters.getContact(this.localContact.key)
 				await this.updateLocalContact(contact)
-			}
+			} else if (this.localContact.dav.etag === null) {
+				const contact = this.$store.getters.getContact(this.localContact.key)
+				await this.$store.dispatch('fetchFullContact', { contact, forceReFetch: true })
+				await this.updateLocalContact(contact)
+                        }
 		},
 
 		/**
