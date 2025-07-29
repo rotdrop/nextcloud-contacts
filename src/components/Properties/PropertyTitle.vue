@@ -60,7 +60,7 @@ export default {
 		},
 		property: {
 			type: Object,
-			default: () => {},
+			default: () => ({}),
 		},
 		isMultiple: {
 			type: Boolean,
