@@ -224,7 +224,7 @@ export default {
 		 * Watch textarea resize and update the gridSize accordingly
 		 */
 		resizeHeight: debounce(function() {
-			const textarea = this.$refs.textarea.$el.querySelector('textarea')
+			const textarea = this.$refs.textarea?.$el.querySelector('textarea')
 
 			if (textarea && textarea?.offsetHeight) {
 				// adjust textarea size to content (2 = border)
